@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pjb.ssm.dao.ActionLogDao">
+    <!--增加语句-->
+    <insert id="add" parameterType="pjb.ssm.domain.UserActionLog">
+        INSERT INTO
+        `user_action_log`
+        (`login_id`,`session_id`,`time`,`ip_addr_v4`,`os_name`,`os_version`,`bro_name`,`bro_version`,`request_body`,`description`,`other`,`method`)
+        VALUES
+        (#{loginId},#{sessionId},FROM_UNIXTIME(#{time}),#{ipAddrV4},#{osName},#{osVersion},#{broName},#{broVersion},#{requestBody},#{description},#{other},#{method})
+    </insert>
+
+    <!--分页列表：offset起始位置 limit每一页数据，DESC倒序排列-->
+    <select id="findAll" resultType="pjb.ssm.domain.UserActionLog" >
+        SELECT
+        *
+        FROM
+        `user_action_log`
+        ORDER BY
+        `id`
+        DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+    <select id="getAllCount" resultType="int" >
+        SELECT
+        COUNT(*)
+        FROM
+        `user_action_log`;
+    </select>
+</mapper>
